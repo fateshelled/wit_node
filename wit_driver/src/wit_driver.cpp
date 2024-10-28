@@ -186,6 +186,8 @@ void WitDriver::spin() {
         if (flag == Data::Flags::RPY) {
           if (isnan(yaw_offset_)) yaw_offset_ = data_.imugps_.rpy[2];
           relate_yaw_ = data_.imugps_.rpy[2] - yaw_offset_;
+          while (relate_yaw_ > M_PI) relate_yaw_ -= 2 * M_PI;
+          while (relate_yaw_ < -M_PI) relate_yaw_ += 2 * M_PI;
         }
       }
       unlockDataAccess();
